@@ -53,7 +53,8 @@ registroVeiculo = [
     ['r3', 'ERR3J79', 73.89, 100, 'comum'],
     ['r3', 'ERP1J22', 65.89, 100, 'comum'],
     ['r3', 'BNG9J99', 110.89, 100, 'especial'],
-    ['r3', 'ABT8I78', 110.98, 100, 'comum']
+    ['r3', 'ABT8I78', 110.98, 100, 'comum'],
+    ['r3', 'ABT8I74', 106, 101, 'comum']
 ]
 
 print(type(registroVeiculo))
@@ -63,17 +64,22 @@ print("\nPLACA    - PCT    - RADAR")
 
 # for i in range(0,len(registroVeiculo)):
 for i in range(0, registroVeiculo.__len__()):
-    # Porcentagem_excesso = [(vel_auf - vel_perm)/vel_perm] * 100
-    pctExcesso = (registroVeiculo[i][2] - float(registroVeiculo[i][3])) / float(registroVeiculo[i][3]) * 100
+    codRadar = registroVeiculo[i][0]
+    placa = registroVeiculo[i][1]
+    velApurada = registroVeiculo[i][2]
+    velPermitida = registroVeiculo[i][3] + 7 if registroVeiculo[i][3] < 100 else registroVeiculo[i][3]
+    tipoVeiculo = registroVeiculo[i][4]
 
-    if registroVeiculo[i][4] == 'comum' and pctExcesso > 0:
-        print(f'{registroVeiculo[i][1]}  - {pctExcesso:.2f}   - {registroVeiculo[i][0]}')
+    # Porcentagem_excesso = [(vel_auf - vel_perm)/vel_perm] * 100
+    porcentagemExcesso = (velApurada - float(velPermitida)) / float(velPermitida) * 100
+    if tipoVeiculo == 'comum' and porcentagemExcesso > 0 and velApurada > velPermitida:
+        print(f'{placa}  - {porcentagemExcesso:.2f}   - {codRadar}')
 
 print("\nPLACA    - PCT    - RADAR")
 
 for registro in registroVeiculo:
     # Porcentagem_excesso = [(vel_auf - vel_perm)/vel_perm] * 100
-    pctExcesso = (registro[2] - float(registro[3])) / float(registro[3]) * 100
+    porcentagemExcesso = (registro[2] - float(registro[3])) / float(registro[3]) * 100
 
-    if registro[4] == 'comum' and pctExcesso > 0:
-        print(f'{registro[1]}  - {pctExcesso:.2f}   - {registro[0]}')
+    if registro[4] == 'comum' and porcentagemExcesso > 0:
+        print(f'{registro[1]}  - {porcentagemExcesso:.2f}   - {registro[0]}')
